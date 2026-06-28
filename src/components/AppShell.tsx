@@ -19,9 +19,12 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           <nav className="flex items-center gap-4">
             <Link
               href="/search"
-              className="text-sm text-slate-600 hover:text-slate-900 transition-colors"
+              className="text-sm text-slate-600 hover:text-slate-900 transition-colors flex items-center gap-1.5"
             >
               Search
+              <kbd className="hidden sm:inline-flex items-center rounded border border-slate-200 bg-slate-100 px-1 py-0.5 text-[10px] font-mono text-slate-400">
+                /
+              </kbd>
             </Link>
             <Link
               href="/"

@@ -523,7 +523,12 @@ export default async function EntityPage({
         <Breadcrumb items={crumbs} />
 
         {/* Entity header */}
-        <div className="bg-white border border-slate-200 rounded-md shadow-sm p-6 mb-6">
+        <div className="bg-white border border-slate-200 rounded-md shadow-sm p-6 mb-6 relative">
+          {rels.length > 0 && (
+            <div className="absolute top-4 right-5 text-[11px] text-slate-400 tabular-nums">
+              {rels.length} connection{rels.length !== 1 ? "s" : ""}
+            </div>
+          )}
           {entity.type === "actor" && (
             <ActorHeader actor={entity as ThreatActor} />
           )}
