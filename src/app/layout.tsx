@@ -10,9 +10,9 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Threat Intelligence Platform — eSentire PM Assignment",
+  title: "Threat Intelligence Platform",
   description:
-    "A prototype threat intelligence search and knowledge graph exploration tool. Built as a PM assignment for eSentire.",
+    "Threat intelligence search and knowledge graph exploration prototype.",
 };
 
 export default function RootLayout({
@@ -22,7 +22,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${inter.variable} ${jetbrainsMono.variable}`}>
-      <body className="font-sans antialiased bg-slate-50 text-slate-900">
+      <body className="font-sans antialiased bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100">
         <GlobalShortcuts />
         {children}
       </body>

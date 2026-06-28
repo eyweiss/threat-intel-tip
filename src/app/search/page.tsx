@@ -25,7 +25,46 @@ import type {
 } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
-// ─── helpers ─────────────────────────────────────────────────────────────────
+// ─── constants ────────────────────────────────────────────────────────────────
+
+const ENTITY_TYPES: { value: EntityType; label: string }[] = [
+  { value: "actor", label: "Actors" },
+  { value: "vulnerability", label: "Vulnerabilities" },
+  { value: "campaign", label: "Campaigns" },
+  { value: "sector", label: "Sectors" },
+];
+
+const CONFIDENCE_OPTIONS: { value: Confidence; label: string }[] = [
+  { value: "confirmed", label: "Confirmed" },
+  { value: "suspected", label: "Suspected" },
+];
+
+const TYPE_ACTIVE_COLORS: Record<EntityType, string> = {
+  actor: "bg-purple-800 text-white border-purple-800",
+  vulnerability: "bg-rose-700 text-white border-rose-700",
+  campaign: "bg-teal-700 text-white border-teal-700",
+  sector: "bg-slate-600 text-white border-slate-600",
+};
+
+const FEATURES = [
+  {
+    num: "01",
+    title: "Search & resolve",
+    body: 'Full-text search with alias resolution. Type "Nobelium" and it resolves to APT29.',
+  },
+  {
+    num: "02",
+    title: "Profile & connect",
+    body: "Entity profiles show all relationships grouped by type, each with confidence level and source citation.",
+  },
+  {
+    num: "03",
+    title: "Pivot navigation",
+    body: "Click any connection to explore it. The breadcrumb trail records your multi-hop path.",
+  },
+];
+
+// ─── helpers ──────────────────────────────────────────────────────────────────
 
 function entityPath(entity: Entity): string {
   return `/entity/${entity.type}/${entity.id}?trail=search`;
@@ -44,7 +83,7 @@ function getEntityConfidence(entity: Entity): Confidence | null {
   return null;
 }
 
-// ─── filter chip ─────────────────────────────────────────────────────────────
+// ─── filter chip ──────────────────────────────────────────────────────────────
 
 function FilterChip({
   active,
@@ -63,8 +102,8 @@ function FilterChip({
       className={cn(
         "inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-medium transition-colors cursor-pointer",
         active
-          ? (colorClass ?? "bg-slate-900 text-white border-slate-900")
-          : "bg-white text-slate-600 border-slate-300 hover:border-slate-400 hover:text-slate-800"
+          ? (colorClass ?? "bg-slate-900 text-white border-slate-900 dark:bg-slate-200 dark:text-slate-900 dark:border-slate-200")
+          : "bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-300 dark:border-slate-600 hover:border-slate-400 dark:hover:border-slate-500 hover:text-slate-800 dark:hover:text-slate-100"
       )}
     >
       {children}
@@ -72,7 +111,7 @@ function FilterChip({
   );
 }
 
-// ─── result row ──────────────────────────────────────────────────────────────
+// ─── result row ───────────────────────────────────────────────────────────────
 
 function ResultRow({ entity }: { entity: Entity }) {
   const aliases = getEntityAliases(entity);
@@ -84,7 +123,7 @@ function ResultRow({ entity }: { entity: Entity }) {
   return (
     <Link
       href={entityPath(entity)}
-      className="block border-b border-slate-100 last:border-0 hover:bg-slate-50 transition-colors group"
+      className="block border-b border-slate-100 dark:border-slate-800 last:border-0 hover:bg-slate-50 dark:hover:bg-slate-800/60 transition-colors group"
     >
       <div className="px-4 py-3 flex items-start gap-3">
         <div className="pt-0.5 shrink-0">
@@ -93,11 +132,11 @@ function ResultRow({ entity }: { entity: Entity }) {
         <div className="flex-1 min-w-0">
           <div className="flex items-start justify-between gap-2">
             <div className="min-w-0">
-              <span className="text-sm font-semibold text-slate-900 group-hover:text-slate-700">
+              <span className="text-sm font-semibold text-slate-900 dark:text-slate-100 group-hover:text-slate-700 dark:group-hover:text-slate-300">
                 {displayName}
               </span>
               {aliases.length > 0 && (
-                <span className="ml-2 text-[11px] text-slate-400">
+                <span className="ml-2 text-[11px] text-slate-400 dark:text-slate-500">
                   {aliases.join(" · ")}
                 </span>
               )}
@@ -105,13 +144,13 @@ function ResultRow({ entity }: { entity: Entity }) {
             <div className="flex items-center gap-2 shrink-0">
               {confidence && <ConfidenceBadge confidence={confidence} />}
               {total > 0 && (
-                <span className="text-[11px] text-slate-400 tabular-nums whitespace-nowrap">
+                <span className="text-[11px] text-slate-400 dark:text-slate-500 tabular-nums whitespace-nowrap">
                   {total} link{total !== 1 ? "s" : ""}
                 </span>
               )}
             </div>
           </div>
-          <p className="text-xs text-slate-500 mt-0.5 leading-snug truncate">
+          <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5 leading-snug truncate">
             {summary}
           </p>
         </div>
@@ -139,13 +178,17 @@ function Suggestion({
       }}
       className={cn(
         "w-full flex items-center gap-2 px-3 py-2 text-left transition-colors",
-        highlighted ? "bg-slate-100" : "hover:bg-slate-50"
+        highlighted
+          ? "bg-slate-100 dark:bg-slate-700"
+          : "hover:bg-slate-50 dark:hover:bg-slate-700/50"
       )}
     >
       <EntityBadge type={entity.type} />
-      <span className="text-sm text-slate-800 truncate">{getDisplayName(entity)}</span>
+      <span className="text-sm text-slate-800 dark:text-slate-200 truncate">
+        {getDisplayName(entity)}
+      </span>
       {entity.type === "actor" && (entity as ThreatActor).aliases.length > 0 && (
-        <span className="text-xs text-slate-400 truncate hidden sm:inline">
+        <span className="text-xs text-slate-400 dark:text-slate-500 truncate hidden sm:inline">
           {(entity as ThreatActor).aliases.slice(0, 2).join(" · ")}
         </span>
       )}
@@ -153,42 +196,21 @@ function Suggestion({
   );
 }
 
-// ─── constants ───────────────────────────────────────────────────────────────
-
-const ENTITY_TYPES: { value: EntityType; label: string }[] = [
-  { value: "actor", label: "Actors" },
-  { value: "vulnerability", label: "Vulnerabilities" },
-  { value: "campaign", label: "Campaigns" },
-  { value: "sector", label: "Sectors" },
-];
-
-const CONFIDENCE_OPTIONS: { value: Confidence; label: string }[] = [
-  { value: "confirmed", label: "Confirmed" },
-  { value: "suspected", label: "Suspected" },
-];
-
-const TYPE_ACTIVE_COLORS: Record<EntityType, string> = {
-  actor: "bg-purple-800 text-white border-purple-800",
-  vulnerability: "bg-rose-700 text-white border-rose-700",
-  campaign: "bg-teal-700 text-white border-teal-700",
-  sector: "bg-slate-600 text-white border-slate-600",
-};
-
 // ─── skeleton shown while searchParams loads ──────────────────────────────────
 
 function SearchFallback() {
   return (
     <div className="max-w-5xl mx-auto px-4 py-8">
       <div className="mb-6">
-        <div className="h-6 w-44 bg-slate-100 rounded animate-pulse mb-2" />
-        <div className="h-4 w-72 bg-slate-100 rounded animate-pulse" />
+        <div className="h-6 w-44 bg-slate-100 dark:bg-slate-800 rounded animate-pulse mb-2" />
+        <div className="h-4 w-72 bg-slate-100 dark:bg-slate-800 rounded animate-pulse" />
       </div>
-      <div className="h-10 bg-slate-100 rounded-md animate-pulse" />
+      <div className="h-10 bg-slate-100 dark:bg-slate-800 rounded-md animate-pulse" />
     </div>
   );
 }
 
-// ─── search content (reads + writes URL params) ───────────────────────────────
+// ─── search content ───────────────────────────────────────────────────────────
 
 function SearchContent() {
   const searchParams = useSearchParams();
@@ -224,7 +246,6 @@ function SearchContent() {
     [query, entityTypeFilter, confidenceFilter, sectorFilter]
   );
 
-  // Close dropdown on outside click
   useEffect(() => {
     function handler(e: MouseEvent) {
       if (
@@ -252,7 +273,6 @@ function SearchContent() {
     setQuery(value);
     setHighlightedIndex(-1);
     setDropdownOpen(value.trim().length > 0);
-    // Keep query in URL so searches are shareable and ?q= deep-links work
     const params = new URLSearchParams();
     if (value.trim()) params.set("q", value.trim());
     router.replace(`/search${params.size ? `?${params}` : ""}`, { scroll: false });
@@ -281,15 +301,16 @@ function SearchContent() {
     }
   }
 
-  const hasFilters = entityTypeFilter || confidenceFilter || sectorFilter;
+  const hasFilters = !!(entityTypeFilter || confidenceFilter || sectorFilter);
+  const showFeatureCards = !query && !hasFilters;
 
   return (
     <div className="max-w-5xl mx-auto px-4 py-8">
       <div className="mb-6">
-        <h1 className="text-xl font-semibold text-slate-800 mb-1">
+        <h1 className="text-xl font-semibold text-slate-800 dark:text-slate-100 mb-1">
           Intelligence Search
         </h1>
-        <p className="text-sm text-slate-500">
+        <p className="text-sm text-slate-500 dark:text-slate-400">
           Search across threat actors, vulnerabilities, campaigns, and sectors.
         </p>
       </div>
@@ -298,7 +319,7 @@ function SearchContent() {
       <div className="relative mb-2">
         <div className="relative">
           <svg
-            className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400 pointer-events-none"
+            className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400 dark:text-slate-500 pointer-events-none"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -319,13 +340,13 @@ function SearchContent() {
             }}
             onKeyDown={handleKeyDown}
             placeholder="Search by name, alias, CVE, sector…"
-            className="pl-9 h-10 text-sm bg-white border-slate-300 focus:border-slate-400 shadow-sm"
+            className="pl-9 h-10 text-sm bg-white dark:bg-slate-800 border-slate-300 dark:border-slate-600 focus:border-slate-400 dark:focus:border-slate-500 text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 shadow-sm"
             autoFocus
           />
           {query && (
             <button
               onClick={handleClear}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300"
               aria-label="Clear search"
             >
               <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -339,7 +360,7 @@ function SearchContent() {
         {dropdownOpen && suggestions.length > 0 && (
           <div
             ref={dropdownRef}
-            className="absolute top-full left-0 right-0 z-50 mt-1 bg-white border border-slate-200 rounded-md shadow-lg overflow-hidden"
+            className="absolute top-full left-0 right-0 z-50 mt-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md shadow-lg overflow-hidden"
           >
             {suggestions.map((entity, i) => (
               <Suggestion
@@ -349,8 +370,8 @@ function SearchContent() {
                 onSelect={() => navigateToEntity(entity)}
               />
             ))}
-            <div className="border-t border-slate-100 px-3 py-1.5 bg-slate-50">
-              <span className="text-[11px] text-slate-400">
+            <div className="border-t border-slate-100 dark:border-slate-700 px-3 py-1.5 bg-slate-50 dark:bg-slate-900">
+              <span className="text-[11px] text-slate-400 dark:text-slate-500">
                 ↵ Enter to select · ↑↓ navigate · Esc to close
               </span>
             </div>
@@ -360,17 +381,17 @@ function SearchContent() {
 
       {/* Alias hint */}
       {resolvedAlias && (
-        <div className="mb-3 flex items-center gap-1.5 text-xs text-slate-500">
+        <div className="mb-3 flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400">
           <svg className="h-3.5 w-3.5 text-amber-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
           <span>
             Alias resolved:{" "}
-            <span className="font-medium text-slate-600">&ldquo;{query}&rdquo;</span>
+            <span className="font-medium text-slate-600 dark:text-slate-300">&ldquo;{query}&rdquo;</span>
             {" → "}
             <Link
               href={entityPath(resolvedAlias)}
-              className="font-semibold text-purple-700 hover:underline"
+              className="font-semibold text-purple-700 dark:text-purple-400 hover:underline"
             >
               {resolvedAlias.name}
             </Link>
@@ -381,7 +402,7 @@ function SearchContent() {
       {/* Filters */}
       <div className="mb-5 space-y-2">
         <div className="flex items-center gap-2 flex-wrap">
-          <span className="text-[11px] font-medium text-slate-400 uppercase tracking-wide w-16 shrink-0">Type</span>
+          <span className="text-[11px] font-medium text-slate-400 dark:text-slate-500 uppercase tracking-wide w-16 shrink-0">Type</span>
           <FilterChip active={!entityTypeFilter} onClick={() => setEntityTypeFilter(null)}>All</FilterChip>
           {ENTITY_TYPES.map(({ value, label }) => (
             <FilterChip
@@ -396,7 +417,7 @@ function SearchContent() {
         </div>
 
         <div className="flex items-center gap-2 flex-wrap">
-          <span className="text-[11px] font-medium text-slate-400 uppercase tracking-wide w-16 shrink-0">Confidence</span>
+          <span className="text-[11px] font-medium text-slate-400 dark:text-slate-500 uppercase tracking-wide w-16 shrink-0">Confidence</span>
           <FilterChip active={!confidenceFilter} onClick={() => setConfidenceFilter(null)}>All</FilterChip>
           {CONFIDENCE_OPTIONS.map(({ value, label }) => (
             <FilterChip
@@ -411,7 +432,7 @@ function SearchContent() {
         </div>
 
         <div className="flex items-center gap-2 flex-wrap">
-          <span className="text-[11px] font-medium text-slate-400 uppercase tracking-wide w-16 shrink-0">Sector</span>
+          <span className="text-[11px] font-medium text-slate-400 dark:text-slate-500 uppercase tracking-wide w-16 shrink-0">Sector</span>
           <FilterChip active={!sectorFilter} onClick={() => setSectorFilter(null)}>All</FilterChip>
           {intelData.sectors.map((s) => (
             <FilterChip
@@ -425,45 +446,72 @@ function SearchContent() {
         </div>
       </div>
 
-      {/* Results */}
-      <div className="bg-white border border-slate-200 rounded-md shadow-sm overflow-hidden">
-        <div className="px-4 py-2 border-b border-slate-100 bg-slate-50 flex items-center justify-between">
-          <span className="text-xs text-slate-500">
-            {results.length === 0
-              ? "No results"
-              : `${results.length} result${results.length !== 1 ? "s" : ""}`}
-            {query && (
-              <span className="text-slate-400"> for &ldquo;{query}&rdquo;</span>
-            )}
-          </span>
-          {hasFilters && (
-            <button
-              onClick={() => {
-                setEntityTypeFilter(null);
-                setConfidenceFilter(null);
-                setSectorFilter(null);
-              }}
-              className="text-[11px] text-slate-400 hover:text-slate-600 underline"
+      {/* Results / empty state */}
+      {showFeatureCards ? (
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          {FEATURES.map(({ num, title, body }) => (
+            <div
+              key={num}
+              className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-md p-5 shadow-sm"
             >
-              Clear filters
-            </button>
+              <div className="flex items-center gap-2 mb-3">
+                <span className="text-[11px] font-bold text-slate-400 dark:text-slate-500 tabular-nums">
+                  {num}
+                </span>
+                <h3 className="text-sm font-semibold text-slate-800 dark:text-slate-200">
+                  {title}
+                </h3>
+              </div>
+              <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
+                {body}
+              </p>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-md shadow-sm overflow-hidden">
+          <div className="px-4 py-2 border-b border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/50 flex items-center justify-between">
+            <span className="text-xs text-slate-500 dark:text-slate-400">
+              {results.length === 0
+                ? "No results"
+                : `${results.length} result${results.length !== 1 ? "s" : ""}`}
+              {query && (
+                <span className="text-slate-400 dark:text-slate-500"> for &ldquo;{query}&rdquo;</span>
+              )}
+            </span>
+            {hasFilters && (
+              <button
+                onClick={() => {
+                  setEntityTypeFilter(null);
+                  setConfidenceFilter(null);
+                  setSectorFilter(null);
+                }}
+                className="text-[11px] text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300 underline"
+              >
+                Clear filters
+              </button>
+            )}
+          </div>
+
+          {results.length === 0 ? (
+            <div className="px-4 py-10 text-center">
+              <p className="text-sm text-slate-500 dark:text-slate-400">
+                No intelligence matching your search.
+              </p>
+              <p className="text-xs text-slate-400 dark:text-slate-500 mt-1">
+                Try a different term or clear the filters.
+              </p>
+            </div>
+          ) : (
+            results.map((entity) => <ResultRow key={entity.id} entity={entity} />)
           )}
         </div>
-
-        {results.length === 0 ? (
-          <div className="px-4 py-10 text-center">
-            <p className="text-sm text-slate-500">No intelligence matching your search.</p>
-            <p className="text-xs text-slate-400 mt-1">Try a different term or clear the filters.</p>
-          </div>
-        ) : (
-          results.map((entity) => <ResultRow key={entity.id} entity={entity} />)
-        )}
-      </div>
+      )}
     </div>
   );
 }
 
-// ─── page ────────────────────────────────────────────────────────────────────
+// ─── page ─────────────────────────────────────────────────────────────────────
 
 export default function SearchPage() {
   return (

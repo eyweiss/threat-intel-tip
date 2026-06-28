@@ -81,19 +81,19 @@ function Breadcrumb({
   items: { label: string; href: string | null }[];
 }) {
   return (
-    <nav className="flex items-center gap-1 text-xs text-slate-400 mb-6 flex-wrap">
+    <nav className="flex items-center gap-1 text-xs text-slate-400 dark:text-slate-500 mb-6 flex-wrap">
       {items.map((item, i) => (
         <span key={i} className="flex items-center gap-1">
-          {i > 0 && <span className="text-slate-300 select-none">›</span>}
+          {i > 0 && <span className="text-slate-300 dark:text-slate-600 select-none">›</span>}
           {item.href ? (
             <Link
               href={item.href}
-              className="hover:text-slate-600 transition-colors max-w-[180px] truncate"
+              className="hover:text-slate-600 dark:hover:text-slate-300 transition-colors max-w-[180px] truncate"
             >
               {item.label}
             </Link>
           ) : (
-            <span className="text-slate-600 font-medium max-w-[180px] truncate">
+            <span className="text-slate-600 dark:text-slate-300 font-medium max-w-[180px] truncate">
               {item.label}
             </span>
           )}
@@ -119,27 +119,27 @@ function RelationshipRow({
   return (
     <Link
       href={buildPivotUrl(linkedEntity, currentId, trail)}
-      className="flex items-start gap-3 px-4 py-3 border-b border-slate-100 last:border-0 hover:bg-slate-50 group transition-colors"
+      className="flex items-start gap-3 px-4 py-3 border-b border-slate-100 dark:border-slate-800 last:border-0 hover:bg-slate-50 dark:hover:bg-slate-800/60 group transition-colors"
     >
       <div className="pt-0.5 shrink-0">
         <EntityBadge type={linkedEntity.type} />
       </div>
       <div className="flex-1 min-w-0">
         <div className="flex items-start justify-between gap-2">
-          <span className="text-sm font-medium text-slate-800 group-hover:text-slate-600 truncate">
+          <span className="text-sm font-medium text-slate-800 dark:text-slate-200 group-hover:text-slate-600 dark:group-hover:text-slate-400 truncate">
             {getDisplayName(linkedEntity)}
           </span>
           <ConfidenceBadge confidence={rel.confidence} className="shrink-0" />
         </div>
-        <p className="text-xs text-slate-400 mt-0.5 truncate">{rel.source}</p>
+        <p className="text-xs text-slate-400 dark:text-slate-500 mt-0.5 truncate">{rel.source}</p>
         {rel.notes && (
-          <p className="text-xs text-slate-500 mt-1 italic leading-snug">
+          <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 italic leading-snug">
             {rel.notes}
           </p>
         )}
       </div>
       <svg
-        className="h-4 w-4 text-slate-300 group-hover:text-slate-400 shrink-0 mt-0.5 transition-colors"
+        className="h-4 w-4 text-slate-300 dark:text-slate-600 group-hover:text-slate-400 dark:group-hover:text-slate-500 shrink-0 mt-0.5 transition-colors"
         fill="none"
         stroke="currentColor"
         viewBox="0 0 24 24"
@@ -179,18 +179,18 @@ function RelationshipSection({
   return (
     <div className="mb-5">
       <div className="flex items-center gap-2 mb-2">
-        <h3 className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">
+        <h3 className="text-[11px] font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wider">
           {section.title}
         </h3>
         {section.rels.length > 0 && (
-          <span className="text-[11px] text-slate-400">
+          <span className="text-[11px] text-slate-400 dark:text-slate-500">
             ({section.rels.length})
           </span>
         )}
       </div>
-      <div className="border border-slate-200 rounded-md overflow-hidden bg-white">
+      <div className="border border-slate-200 dark:border-slate-700 rounded-md overflow-hidden bg-white dark:bg-slate-900">
         {section.rels.length === 0 ? (
-          <p className="px-4 py-3 text-xs text-slate-400 italic bg-slate-50">
+          <p className="px-4 py-3 text-xs text-slate-400 dark:text-slate-500 italic bg-slate-50 dark:bg-slate-800/50">
             {section.emptyMessage ?? EMPTY_MSG}
           </p>
         ) : (
@@ -218,9 +218,12 @@ function RelationshipSection({
 
 function ActorHeader({ actor }: { actor: ThreatActor }) {
   const statusStyle: Record<string, string> = {
-    active: "bg-red-50 text-red-700 border-red-200",
-    dormant: "bg-amber-50 text-amber-700 border-amber-200",
-    disbanded: "bg-slate-100 text-slate-500 border-slate-200",
+    active:
+      "bg-red-50 text-red-700 border-red-200 dark:bg-red-900/20 dark:text-red-400 dark:border-red-800",
+    dormant:
+      "bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-900/20 dark:text-amber-400 dark:border-amber-800",
+    disbanded:
+      "bg-slate-100 text-slate-500 border-slate-200 dark:bg-slate-800 dark:text-slate-400 dark:border-slate-700",
   };
 
   return (
@@ -236,14 +239,16 @@ function ActorHeader({ actor }: { actor: ThreatActor }) {
           {actor.status}
         </span>
       </div>
-      <h1 className="text-2xl font-bold text-slate-900 mb-2">{actor.name}</h1>
+      <h1 className="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-2">
+        {actor.name}
+      </h1>
 
       {actor.aliases.length > 0 && (
         <div className="flex flex-wrap gap-1.5 mb-4">
           {actor.aliases.map((alias) => (
             <span
               key={alias}
-              className="inline-flex items-center rounded bg-purple-50 border border-purple-200 px-2 py-0.5 text-xs text-purple-700 font-medium"
+              className="inline-flex items-center rounded bg-purple-50 dark:bg-purple-900/20 border border-purple-200 dark:border-purple-800 px-2 py-0.5 text-xs text-purple-700 dark:text-purple-300 font-medium"
             >
               {alias}
             </span>
@@ -253,19 +258,21 @@ function ActorHeader({ actor }: { actor: ThreatActor }) {
 
       <dl className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-2 mb-5 text-sm">
         <div className="flex items-center gap-2">
-          <dt className="text-slate-400 shrink-0">Attribution</dt>
-          <dd className="text-slate-700 font-medium truncate">
+          <dt className="text-slate-400 dark:text-slate-500 shrink-0">Attribution</dt>
+          <dd className="text-slate-700 dark:text-slate-300 font-medium truncate">
             {actor.attribution}
           </dd>
           <ConfidenceBadge confidence={actor.attributionConfidence} />
         </div>
         <div className="flex items-start gap-2">
-          <dt className="text-slate-400 shrink-0">Motivation</dt>
-          <dd className="text-slate-700">{actor.motivation}</dd>
+          <dt className="text-slate-400 dark:text-slate-500 shrink-0">Motivation</dt>
+          <dd className="text-slate-700 dark:text-slate-300">{actor.motivation}</dd>
         </div>
       </dl>
 
-      <p className="text-sm text-slate-600 leading-relaxed">{actor.description}</p>
+      <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+        {actor.description}
+      </p>
     </>
   );
 }
@@ -286,10 +293,14 @@ function VulnerabilityHeader({ vuln }: { vuln: Vulnerability }) {
   };
 
   const statusStyle: Record<string, string> = {
-    "actively-exploited": "bg-red-50 text-red-700 border-red-200",
-    "poc-available": "bg-orange-50 text-orange-700 border-orange-200",
-    unpatched: "bg-orange-50 text-orange-700 border-orange-200",
-    patched: "bg-emerald-50 text-emerald-700 border-emerald-200",
+    "actively-exploited":
+      "bg-red-50 text-red-700 border-red-200 dark:bg-red-900/20 dark:text-red-400 dark:border-red-800",
+    "poc-available":
+      "bg-orange-50 text-orange-700 border-orange-200 dark:bg-orange-900/20 dark:text-orange-400 dark:border-orange-800",
+    unpatched:
+      "bg-orange-50 text-orange-700 border-orange-200 dark:bg-orange-900/20 dark:text-orange-400 dark:border-orange-800",
+    patched:
+      "bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-900/20 dark:text-emerald-400 dark:border-emerald-800",
   };
 
   const published = new Date(vuln.datePublished).toLocaleDateString("en-US", {
@@ -302,11 +313,11 @@ function VulnerabilityHeader({ vuln }: { vuln: Vulnerability }) {
     <>
       <div className="flex items-center gap-2 mb-2">
         <EntityBadge type="vulnerability" />
-        <span className="font-mono text-xs text-slate-500 bg-slate-100 px-2 py-0.5 rounded border border-slate-200">
+        <span className="font-mono text-xs text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded border border-slate-200 dark:border-slate-700">
           {vuln.cve}
         </span>
       </div>
-      <h1 className="text-2xl font-bold text-slate-900 mb-3">
+      <h1 className="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-3">
         {vuln.commonName}
       </h1>
 
@@ -334,16 +345,18 @@ function VulnerabilityHeader({ vuln }: { vuln: Vulnerability }) {
 
       <dl className="flex flex-wrap gap-x-6 gap-y-1 mb-5 text-sm">
         <div className="flex gap-2">
-          <dt className="text-slate-400">Product</dt>
-          <dd className="text-slate-700">{vuln.affectedProduct}</dd>
+          <dt className="text-slate-400 dark:text-slate-500">Product</dt>
+          <dd className="text-slate-700 dark:text-slate-300">{vuln.affectedProduct}</dd>
         </div>
         <div className="flex gap-2">
-          <dt className="text-slate-400">Published</dt>
-          <dd className="text-slate-700">{published}</dd>
+          <dt className="text-slate-400 dark:text-slate-500">Published</dt>
+          <dd className="text-slate-700 dark:text-slate-300">{published}</dd>
         </div>
       </dl>
 
-      <p className="text-sm text-slate-600 leading-relaxed">{vuln.description}</p>
+      <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+        {vuln.description}
+      </p>
     </>
   );
 }
@@ -366,29 +379,29 @@ function CampaignHeader({ campaign }: { campaign: Campaign }) {
       <div className="flex items-center gap-2 mb-2">
         <EntityBadge type="campaign" />
         {!campaign.endDate && (
-          <span className="inline-flex items-center rounded-full border border-red-200 bg-red-50 px-2 py-0.5 text-[11px] text-red-700 font-medium">
+          <span className="inline-flex items-center rounded-full border border-red-200 dark:border-red-800 bg-red-50 dark:bg-red-900/20 px-2 py-0.5 text-[11px] text-red-700 dark:text-red-400 font-medium">
             Ongoing
           </span>
         )}
       </div>
-      <h1 className="text-2xl font-bold text-slate-900 mb-3">
+      <h1 className="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-3">
         {campaign.name}
       </h1>
 
       <dl className="flex flex-wrap gap-x-6 gap-y-2 mb-5 text-sm">
         <div className="flex items-center gap-2">
-          <dt className="text-slate-400">Timeline</dt>
-          <dd className="text-slate-700 font-medium">
+          <dt className="text-slate-400 dark:text-slate-500">Timeline</dt>
+          <dd className="text-slate-700 dark:text-slate-300 font-medium">
             {start} → {end ?? "present"}
           </dd>
         </div>
         {actor && (
           <div className="flex items-center gap-2">
-            <dt className="text-slate-400">Attributed to</dt>
+            <dt className="text-slate-400 dark:text-slate-500">Attributed to</dt>
             <dd className="flex items-center gap-1.5">
               <Link
                 href={`/entity/actor/${actor.id}`}
-                className="text-purple-700 font-medium hover:underline"
+                className="text-purple-700 dark:text-purple-400 font-medium hover:underline"
               >
                 {actor.name}
               </Link>
@@ -398,7 +411,7 @@ function CampaignHeader({ campaign }: { campaign: Campaign }) {
         )}
       </dl>
 
-      <p className="text-sm text-slate-600 leading-relaxed">
+      <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
         {campaign.description}
       </p>
     </>
@@ -411,8 +424,10 @@ function SectorHeader({ sector }: { sector: TargetSector }) {
       <div className="flex items-center gap-2 mb-2">
         <EntityBadge type="sector" />
       </div>
-      <h1 className="text-2xl font-bold text-slate-900 mb-3">{sector.name}</h1>
-      <p className="text-sm text-slate-600 leading-relaxed">
+      <h1 className="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-3">
+        {sector.name}
+      </h1>
+      <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
         {sector.description}
       </p>
     </>
@@ -523,9 +538,9 @@ export default async function EntityPage({
         <Breadcrumb items={crumbs} />
 
         {/* Entity header */}
-        <div className="bg-white border border-slate-200 rounded-md shadow-sm p-6 mb-6 relative">
+        <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-md shadow-sm p-6 mb-6 relative">
           {rels.length > 0 && (
-            <div className="absolute top-4 right-5 text-[11px] text-slate-400 tabular-nums">
+            <div className="absolute top-4 right-5 text-[11px] text-slate-400 dark:text-slate-500 tabular-nums">
               {rels.length} connection{rels.length !== 1 ? "s" : ""}
             </div>
           )}
@@ -545,11 +560,11 @@ export default async function EntityPage({
 
         {/* Connected intelligence */}
         <div>
-          <p className="text-sm text-slate-500 mb-4">
-            <span className="font-semibold text-slate-700">
+          <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
+            <span className="font-semibold text-slate-700 dark:text-slate-300">
               Connected intelligence
             </span>
-            <span className="ml-2 text-slate-400 text-xs">
+            <span className="ml-2 text-slate-400 dark:text-slate-500 text-xs">
               — click any row to pivot to that entity
             </span>
           </p>
