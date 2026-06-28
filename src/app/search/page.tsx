@@ -28,7 +28,7 @@ import { cn } from "@/lib/utils";
 // ─── helpers ────────────────────────────────────────────────────────────────
 
 function entityPath(entity: Entity): string {
-  return `/entity/${entity.type}/${entity.id}`;
+  return `/entity/${entity.type}/${entity.id}?trail=search`;
 }
 
 function getEntityAliases(entity: Entity): string[] {
