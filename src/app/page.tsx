@@ -71,6 +71,7 @@ export default function HomePage() {
               </Link>
               <a
                 href="https://github.com/eyweiss/threat-intel-tip"
+                aria-label="View source on GitHub"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 rounded-md border border-slate-300 bg-white px-5 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 transition-colors"

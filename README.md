@@ -2,7 +2,7 @@
 
 A working prototype demonstrating threat intelligence search and knowledge graph exploration, built as a PM assignment for eSentire.
 
-**Live demo:** [threat-intel-tip.vercel.app](https://threat-intel-tip.vercel.app) &nbsp;·&nbsp; **Repo:** [eyweiss/threat-intel-tip](https://github.com/eyweiss/threat-intel-tip)
+**Live demo:** [threat-intel-tip.vercel.app](https://threat-intel-tip.vercel.app) &nbsp;·&nbsp; **GitHub:** [eyweiss/threat-intel-tip](https://github.com/eyweiss/threat-intel-tip)
 
 ---
 
