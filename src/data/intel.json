@@ -1,0 +1,514 @@
+{
+  "actors": [
+    {
+      "type": "actor",
+      "id": "ta-apt29",
+      "name": "APT29",
+      "aliases": ["Cozy Bear", "Nobelium", "The Dukes", "YTTRIUM"],
+      "description": "APT29 is a sophisticated Russian state-sponsored threat actor assessed with high confidence to operate under the Russian Foreign Intelligence Service (SVR). Known for stealthy, long-duration intrusions targeting government, diplomatic, and technology organizations in NATO-aligned countries. They prioritize persistent access and intelligence collection over disruption.",
+      "attribution": "Russian Foreign Intelligence Service (SVR)",
+      "attributionConfidence": "confirmed",
+      "motivation": "Espionage, political intelligence gathering",
+      "status": "active"
+    },
+    {
+      "type": "actor",
+      "id": "ta-apt28",
+      "name": "APT28",
+      "aliases": ["Fancy Bear", "Sofacy", "Pawn Storm", "STRONTIUM"],
+      "description": "APT28 is a Russian state-sponsored threat actor attributed to the Russian General Staff Main Intelligence Directorate (GRU). Unlike APT29, APT28 is more aggressive and disruptive, conducting influence operations, hack-and-leak campaigns, and sabotage against defense, media, and government targets in Western nations.",
+      "attribution": "Russian GRU (85th Main Special Service Centre)",
+      "attributionConfidence": "confirmed",
+      "motivation": "Espionage, influence operations, disruption",
+      "status": "active"
+    },
+    {
+      "type": "actor",
+      "id": "ta-lazarus",
+      "name": "Lazarus Group",
+      "aliases": ["Hidden Cobra", "Guardians of Peace", "ZINC", "Labyrinth Chollima"],
+      "description": "Lazarus Group is a North Korean state-sponsored threat actor believed to operate under the Reconnaissance General Bureau (RGB). They are unique in conducting both espionage and financially motivated operations — including cryptocurrency theft and bank heists — to generate revenue for the DPRK regime under international sanctions.",
+      "attribution": "North Korean Reconnaissance General Bureau (RGB)",
+      "attributionConfidence": "confirmed",
+      "motivation": "Financial gain, espionage, sanctions evasion",
+      "status": "active"
+    },
+    {
+      "type": "actor",
+      "id": "ta-apt41",
+      "name": "APT41",
+      "aliases": ["Double Dragon", "Winnti", "Barium", "WICKED PANDA"],
+      "description": "APT41 is a unique Chinese state-sponsored actor that blurs the line between espionage and financial crime, conducting both missions simultaneously. They are assessed to operate with tacit approval from the Chinese Ministry of State Security while also pursuing financially motivated operations — including supply chain compromises and pharmaceutical IP theft — for personal gain.",
+      "attribution": "Chinese Ministry of State Security (MSS)",
+      "attributionConfidence": "confirmed",
+      "motivation": "Dual-use: state espionage and financial gain",
+      "status": "active"
+    },
+    {
+      "type": "actor",
+      "id": "ta-sandworm",
+      "name": "Sandworm",
+      "aliases": ["Voodoo Bear", "IRIDIUM", "Seashell Blizzard", "Quedagh"],
+      "description": "Sandworm is a Russian GRU threat actor (Unit 74455) specializing in destructive cyberattacks against critical infrastructure. Responsible for the NotPetya wiper (2017) and attacks on Ukrainian power grids, they represent the most operationally destructive nation-state actor on record. Their campaigns prioritize disruption over intelligence collection.",
+      "attribution": "Russian GRU (Unit 74455)",
+      "attributionConfidence": "confirmed",
+      "motivation": "Sabotage, disruption of critical infrastructure",
+      "status": "active"
+    }
+  ],
+  "vulnerabilities": [
+    {
+      "type": "vulnerability",
+      "id": "vuln-log4shell",
+      "cve": "CVE-2021-44228",
+      "commonName": "Log4Shell",
+      "description": "A critical remote code execution vulnerability in Apache Log4j2, a ubiquitous Java logging library. An attacker can exploit this by sending a specially crafted log message that triggers JNDI lookup to an attacker-controlled server. Due to Log4j2's prevalence across enterprise software, the attack surface is extraordinarily broad — millions of systems are potentially affected.",
+      "cvssScore": 10.0,
+      "severity": "critical",
+      "affectedProduct": "Apache Log4j2 (versions 2.0-beta9 to 2.14.1)",
+      "exploitationStatus": "actively-exploited",
+      "datePublished": "2021-12-10"
+    },
+    {
+      "type": "vulnerability",
+      "id": "vuln-outlook-eop",
+      "cve": "CVE-2023-23397",
+      "commonName": "Outlook Zero-Click EoP",
+      "description": "A critical privilege escalation zero-click vulnerability in Microsoft Outlook. Exploitation occurs automatically when the victim receives a specially crafted email — no user interaction required. The attack forces the victim's system to send NTLM credentials to an attacker-controlled server, which can then be used for relay attacks or offline cracking.",
+      "cvssScore": 9.8,
+      "severity": "critical",
+      "affectedProduct": "Microsoft Outlook for Windows",
+      "exploitationStatus": "actively-exploited",
+      "datePublished": "2023-03-14"
+    },
+    {
+      "type": "vulnerability",
+      "id": "vuln-confluence-rce",
+      "cve": "CVE-2021-26084",
+      "commonName": "Confluence Server RCE",
+      "description": "An OGNL injection vulnerability in Atlassian Confluence Server and Data Center that allows an unauthenticated attacker to execute arbitrary code. The flaw exists in the Confluence Web Work module. Despite patches being available, mass exploitation was observed within days of public disclosure, with multiple threat actors deploying cryptocurrency miners and backdoors.",
+      "cvssScore": 9.8,
+      "severity": "critical",
+      "affectedProduct": "Atlassian Confluence Server and Data Center",
+      "exploitationStatus": "patched",
+      "datePublished": "2021-08-25"
+    },
+    {
+      "type": "vulnerability",
+      "id": "vuln-follina",
+      "cve": "CVE-2022-30190",
+      "commonName": "Follina (MSDT RCE)",
+      "description": "A remote code execution vulnerability in the Microsoft Support Diagnostic Tool (MSDT) exploitable via specially crafted Office documents. The flaw allows an attacker to execute arbitrary code with the privileges of the calling application when a user opens a malicious Word document, even in Protected View via the Preview Pane.",
+      "cvssScore": 7.8,
+      "severity": "high",
+      "affectedProduct": "Microsoft Windows MSDT / Office",
+      "exploitationStatus": "patched",
+      "datePublished": "2022-05-30"
+    }
+  ],
+  "campaigns": [
+    {
+      "type": "campaign",
+      "id": "camp-sunburst",
+      "name": "SUNBURST / SolarWinds",
+      "description": "A highly sophisticated supply chain compromise in which APT29 trojanized the SolarWinds Orion software build process, distributing a backdoor to approximately 18,000 customers — including multiple US federal agencies and Fortune 500 companies. The intrusion went undetected for nearly nine months. It remains one of the most consequential espionage operations in history.",
+      "startDate": "2019-10-01",
+      "endDate": "2020-12-13",
+      "attributedTo": "ta-apt29",
+      "attributionConfidence": "confirmed"
+    },
+    {
+      "type": "campaign",
+      "id": "camp-velvet-typhoon",
+      "name": "Operation Velvet Typhoon",
+      "description": "A multi-stage espionage campaign leveraging the Log4Shell vulnerability to gain initial access to financial sector and cryptocurrency exchange infrastructure. The campaign deployed a custom implant following Log4Shell exploitation, maintaining persistent access over several months to collect credentials and transact data.",
+      "startDate": "2021-12-15",
+      "endDate": "2022-09-30",
+      "attributedTo": "ta-lazarus",
+      "attributionConfidence": "confirmed"
+    },
+    {
+      "type": "campaign",
+      "id": "camp-olympic-destroyer",
+      "name": "Olympic Destroyer",
+      "description": "A destructive wiper malware campaign launched at the 2018 Pyeongchang Winter Olympics opening ceremony. The attack targeted the Games' IT infrastructure, disabling Wi-Fi, broadcasting systems, and the official Olympics app. Sandworm deployed an elaborate false-flag operation designed to implicate North Korea and China, successfully deceiving several security vendors.",
+      "startDate": "2018-02-09",
+      "endDate": "2018-02-09",
+      "attributedTo": "ta-sandworm",
+      "attributionConfidence": "confirmed"
+    },
+    {
+      "type": "campaign",
+      "id": "camp-north-star",
+      "name": "Operation North Star",
+      "description": "A targeted spear-phishing campaign masquerading as recruitment offers from US defense contractors. Lazarus Group sent trojanized job description documents to aerospace and defense engineers, deploying custom implants to harvest sensitive technical data. The campaign exploited multiple vulnerabilities including Log4Shell for lateral movement after initial access.",
+      "startDate": "2020-06-01",
+      "endDate": null,
+      "attributedTo": "ta-lazarus",
+      "attributionConfidence": "confirmed"
+    },
+    {
+      "type": "campaign",
+      "id": "camp-ghostwriter",
+      "name": "GhostWriter",
+      "description": "An influence and intrusion campaign combining hack-and-leak operations with fabricated content attributed to real journalists and officials. APT28 used CVE-2023-23397 to harvest NTLM credentials from NATO-affiliated government and media organizations, then used the access to steal and selectively leak documents to amplify disinformation narratives across Eastern Europe.",
+      "startDate": "2022-01-01",
+      "endDate": null,
+      "attributedTo": "ta-apt28",
+      "attributionConfidence": "suspected"
+    }
+  ],
+  "sectors": [
+    {
+      "type": "sector",
+      "id": "sector-government",
+      "name": "Government",
+      "description": "National, federal, state, and local government agencies, ministries, and public administration bodies."
+    },
+    {
+      "type": "sector",
+      "id": "sector-technology",
+      "name": "Technology",
+      "description": "Software vendors, cloud providers, managed service providers, and technology infrastructure companies."
+    },
+    {
+      "type": "sector",
+      "id": "sector-healthcare",
+      "name": "Healthcare",
+      "description": "Hospitals, pharmaceutical companies, medical device manufacturers, and public health agencies."
+    },
+    {
+      "type": "sector",
+      "id": "sector-defense",
+      "name": "Defense",
+      "description": "Defense contractors, military supply chains, weapons manufacturers, and government defense agencies."
+    },
+    {
+      "type": "sector",
+      "id": "sector-media",
+      "name": "Media",
+      "description": "News organizations, broadcasters, social media platforms, and publishing companies."
+    },
+    {
+      "type": "sector",
+      "id": "sector-finance",
+      "name": "Finance",
+      "description": "Banks, investment firms, cryptocurrency exchanges, payment processors, and central banks."
+    },
+    {
+      "type": "sector",
+      "id": "sector-energy",
+      "name": "Energy",
+      "description": "Power grids, oil and gas companies, utilities, nuclear facilities, and renewable energy providers."
+    }
+  ],
+  "relationships": [
+    {
+      "id": "rel-001",
+      "type": "exploits",
+      "sourceId": "ta-apt29",
+      "sourceType": "actor",
+      "targetId": "vuln-log4shell",
+      "targetType": "vulnerability",
+      "confidence": "confirmed",
+      "source": "Mandiant Threat Intelligence Report, Jan 2022",
+      "notes": "APT29 used Log4Shell for initial access in campaigns targeting technology vendors supplying government customers."
+    },
+    {
+      "id": "rel-002",
+      "type": "runs",
+      "sourceId": "ta-apt29",
+      "sourceType": "actor",
+      "targetId": "camp-sunburst",
+      "targetType": "campaign",
+      "confidence": "confirmed",
+      "source": "US CISA/NSA/FBI Joint Advisory, Apr 2021"
+    },
+    {
+      "id": "rel-003",
+      "type": "targets",
+      "sourceId": "ta-apt29",
+      "sourceType": "actor",
+      "targetId": "sector-government",
+      "targetType": "sector",
+      "confidence": "confirmed",
+      "source": "NCSC UK APT29 Advisory, 2020"
+    },
+    {
+      "id": "rel-004",
+      "type": "targets",
+      "sourceId": "ta-apt29",
+      "sourceType": "actor",
+      "targetId": "sector-technology",
+      "targetType": "sector",
+      "confidence": "confirmed",
+      "source": "NCSC UK APT29 Advisory, 2020"
+    },
+    {
+      "id": "rel-005",
+      "type": "targets",
+      "sourceId": "ta-apt29",
+      "sourceType": "actor",
+      "targetId": "sector-healthcare",
+      "targetType": "sector",
+      "confidence": "confirmed",
+      "source": "NCSC UK Advisory on COVID-19 vaccine research targeting, Jul 2020"
+    },
+    {
+      "id": "rel-006",
+      "type": "exploits",
+      "sourceId": "ta-apt28",
+      "sourceType": "actor",
+      "targetId": "vuln-outlook-eop",
+      "targetType": "vulnerability",
+      "confidence": "confirmed",
+      "source": "Microsoft Threat Intelligence, Mar 2023"
+    },
+    {
+      "id": "rel-007",
+      "type": "exploits",
+      "sourceId": "ta-apt28",
+      "sourceType": "actor",
+      "targetId": "vuln-log4shell",
+      "targetType": "vulnerability",
+      "confidence": "suspected",
+      "source": "CrowdStrike Adversary Intelligence, Feb 2022",
+      "notes": "Infrastructure overlap with confirmed APT28 infrastructure; attribution is not definitive."
+    },
+    {
+      "id": "rel-008",
+      "type": "runs",
+      "sourceId": "ta-apt28",
+      "sourceType": "actor",
+      "targetId": "camp-ghostwriter",
+      "targetType": "campaign",
+      "confidence": "suspected",
+      "source": "Mandiant APT28 Profile, 2023"
+    },
+    {
+      "id": "rel-009",
+      "type": "targets",
+      "sourceId": "ta-apt28",
+      "sourceType": "actor",
+      "targetId": "sector-defense",
+      "targetType": "sector",
+      "confidence": "confirmed",
+      "source": "US DoD Cyber Strategy Report, 2021"
+    },
+    {
+      "id": "rel-010",
+      "type": "targets",
+      "sourceId": "ta-apt28",
+      "sourceType": "actor",
+      "targetId": "sector-government",
+      "targetType": "sector",
+      "confidence": "confirmed",
+      "source": "US DoD Cyber Strategy Report, 2021"
+    },
+    {
+      "id": "rel-011",
+      "type": "targets",
+      "sourceId": "ta-apt28",
+      "sourceType": "actor",
+      "targetId": "sector-media",
+      "targetType": "sector",
+      "confidence": "confirmed",
+      "source": "EU DisinfoLab Report on GhostWriter, 2023"
+    },
+    {
+      "id": "rel-012",
+      "type": "overlaps",
+      "sourceId": "ta-apt29",
+      "sourceType": "actor",
+      "targetId": "ta-apt28",
+      "targetType": "actor",
+      "confidence": "suspected",
+      "source": "Internal analyst note, eSentire TRU, 2023",
+      "notes": "Overlapping C2 infrastructure patterns and shared tooling observed during concurrent operations. Suspected operational coordination or resource sharing rather than identity. Same crew cannot be ruled out."
+    },
+    {
+      "id": "rel-013",
+      "type": "exploits",
+      "sourceId": "ta-lazarus",
+      "sourceType": "actor",
+      "targetId": "vuln-log4shell",
+      "targetType": "vulnerability",
+      "confidence": "confirmed",
+      "source": "CISA Alert AA21-356A, Dec 2021"
+    },
+    {
+      "id": "rel-014",
+      "type": "exploits",
+      "sourceId": "ta-lazarus",
+      "sourceType": "actor",
+      "targetId": "vuln-confluence-rce",
+      "targetType": "vulnerability",
+      "confidence": "confirmed",
+      "source": "Volexity Threat Research, Sep 2021"
+    },
+    {
+      "id": "rel-015",
+      "type": "runs",
+      "sourceId": "ta-lazarus",
+      "sourceType": "actor",
+      "targetId": "camp-velvet-typhoon",
+      "targetType": "campaign",
+      "confidence": "confirmed",
+      "source": "eSentire TRU Intelligence Report, Q4 2022"
+    },
+    {
+      "id": "rel-016",
+      "type": "runs",
+      "sourceId": "ta-lazarus",
+      "sourceType": "actor",
+      "targetId": "camp-north-star",
+      "targetType": "campaign",
+      "confidence": "confirmed",
+      "source": "McAfee Advanced Threat Research, Aug 2020"
+    },
+    {
+      "id": "rel-017",
+      "type": "targets",
+      "sourceId": "ta-lazarus",
+      "sourceType": "actor",
+      "targetId": "sector-finance",
+      "targetType": "sector",
+      "confidence": "confirmed",
+      "source": "UN Panel of Experts Report on DPRK sanctions, 2022"
+    },
+    {
+      "id": "rel-018",
+      "type": "targets",
+      "sourceId": "ta-lazarus",
+      "sourceType": "actor",
+      "targetId": "sector-defense",
+      "targetType": "sector",
+      "confidence": "confirmed",
+      "source": "FBI/CISA Joint Cybersecurity Advisory, Feb 2023"
+    },
+    {
+      "id": "rel-019",
+      "type": "exploits",
+      "sourceId": "ta-apt41",
+      "sourceType": "actor",
+      "targetId": "vuln-log4shell",
+      "targetType": "vulnerability",
+      "confidence": "confirmed",
+      "source": "Mandiant APT41 Report, 2022"
+    },
+    {
+      "id": "rel-020",
+      "type": "exploits",
+      "sourceId": "ta-apt41",
+      "sourceType": "actor",
+      "targetId": "vuln-follina",
+      "targetType": "vulnerability",
+      "confidence": "suspected",
+      "source": "Recorded Future Insikt Group, Jul 2022",
+      "notes": "Attributed based on victimology and tooling overlap; not definitive."
+    },
+    {
+      "id": "rel-021",
+      "type": "targets",
+      "sourceId": "ta-apt41",
+      "sourceType": "actor",
+      "targetId": "sector-technology",
+      "targetType": "sector",
+      "confidence": "confirmed",
+      "source": "DOJ Indictment, Sep 2020"
+    },
+    {
+      "id": "rel-022",
+      "type": "targets",
+      "sourceId": "ta-apt41",
+      "sourceType": "actor",
+      "targetId": "sector-healthcare",
+      "targetType": "sector",
+      "confidence": "confirmed",
+      "source": "FireEye APT41 Report, Aug 2019"
+    },
+    {
+      "id": "rel-023",
+      "type": "overlaps",
+      "sourceId": "ta-apt41",
+      "sourceType": "actor",
+      "targetId": "ta-lazarus",
+      "targetType": "actor",
+      "confidence": "suspected",
+      "source": "Recorded Future Insikt Group, 2023",
+      "notes": "Tactical overlaps in cryptocurrency targeting methodology and shared infrastructure segments. No evidence of formal coordination."
+    },
+    {
+      "id": "rel-024",
+      "type": "exploits",
+      "sourceId": "ta-sandworm",
+      "sourceType": "actor",
+      "targetId": "vuln-log4shell",
+      "targetType": "vulnerability",
+      "confidence": "suspected",
+      "source": "ESET Threat Research, Feb 2022",
+      "notes": "Log4Shell exploits observed from infrastructure historically associated with Sandworm, but direct attribution to the actor is not fully confirmed."
+    },
+    {
+      "id": "rel-025",
+      "type": "runs",
+      "sourceId": "ta-sandworm",
+      "sourceType": "actor",
+      "targetId": "camp-olympic-destroyer",
+      "targetType": "campaign",
+      "confidence": "confirmed",
+      "source": "US DoJ Indictment of GRU Unit 74455 Officers, Oct 2020"
+    },
+    {
+      "id": "rel-026",
+      "type": "targets",
+      "sourceId": "ta-sandworm",
+      "sourceType": "actor",
+      "targetId": "sector-energy",
+      "targetType": "sector",
+      "confidence": "confirmed",
+      "source": "CISA/FBI Advisory on Sandworm attacks on Ukrainian power grid, 2022"
+    },
+    {
+      "id": "rel-027",
+      "type": "targets",
+      "sourceId": "ta-sandworm",
+      "sourceType": "actor",
+      "targetId": "sector-government",
+      "targetType": "sector",
+      "confidence": "confirmed",
+      "source": "UK NCSC Advisory on Sandworm, 2019"
+    },
+    {
+      "id": "rel-028",
+      "type": "usedIn",
+      "sourceId": "vuln-log4shell",
+      "sourceType": "vulnerability",
+      "targetId": "camp-velvet-typhoon",
+      "targetType": "campaign",
+      "confidence": "confirmed",
+      "source": "eSentire TRU Intelligence Report, Q4 2022"
+    },
+    {
+      "id": "rel-029",
+      "type": "usedIn",
+      "sourceId": "vuln-log4shell",
+      "sourceType": "vulnerability",
+      "targetId": "camp-north-star",
+      "targetType": "campaign",
+      "confidence": "suspected",
+      "source": "McAfee Advanced Threat Research (updated analysis), 2022",
+      "notes": "Log4Shell used for lateral movement during later phase of the campaign, after initial access was established via spear-phishing."
+    },
+    {
+      "id": "rel-030",
+      "type": "usedIn",
+      "sourceId": "vuln-outlook-eop",
+      "sourceType": "vulnerability",
+      "targetId": "camp-ghostwriter",
+      "targetType": "campaign",
+      "confidence": "confirmed",
+      "source": "Microsoft Threat Intelligence / Mandiant, 2023"
+    }
+  ]
+}
